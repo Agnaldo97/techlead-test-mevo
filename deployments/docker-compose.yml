@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'mevo'
+      MYSQL_USER: 'mevo_user'
+      MYSQL_PASSWORD: 'mevo_password'
+      MYSQL_ROOT_PASSWORD: 'mevo_password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+# Names our volume
+volumes:
+  my-db:

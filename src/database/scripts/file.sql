@@ -1,0 +1,38 @@
+CREATE TABLE mevo.file (
+	id BIGINT auto_increment NOT NULL,
+	quantity INT NOT NULL,
+	qtdSuccess INT NULL,
+	qtdError INT NULL,
+	name VARCHAR(200) NOT NULL,
+	updateAt DATETIME NULL,
+	createdAt DATETIME NULL,
+	CONSTRAINT id_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_bin;
+
+CREATE TABLE mevo.process_file (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+	line INT NOT NULL,
+	file_name VARCHAR(200) NOT NULL,
+	updateAt DATETIME NULL,
+	createdAt DATETIME NULL,
+	reason ENUM('NEGATIVO', 'DUPICADO'),
+	file_id INT
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_bin;
+
+CREATE TABLE mevo.fraud (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+	line INT NOT NULL,
+	file_name VARCHAR(200) NOT NULL,
+	updateAt DATETIME NULL,
+	createdAt DATETIME NULL,
+	file_id INT
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_bin;
