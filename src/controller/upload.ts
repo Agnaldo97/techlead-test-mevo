@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { File } from '../database/models/file';
-import { FileProcess } from '../database/models/process_file';
+// import { File } from '../database/models/file';
+// import { FileProcess } from '../database/models/process_file';
 const csv = require("fast-csv")
 const mock = [
     {

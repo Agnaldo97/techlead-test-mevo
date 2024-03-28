@@ -1,12 +1,12 @@
-import { Table, Column, DataType, Model} from 'sequelize-typescript';
+import { Table, Column, DataType, Model } from 'sequelize-typescript';
 
 @Table({
-   timestamps: true ,
-   tableName: "files",
-   modelName: "Files"
+  timestamps: false,
+  tableName: "file",
+  modelName: "File"
 })
 
-export class File extends Model {
+class File extends Model {
 
   @Column({
     type: DataType.INTEGER,
@@ -21,18 +21,6 @@ export class File extends Model {
     allowNull: false,
   })
   quantity!: number;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  createAt!: string;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  updateAt!: string;
 
   @Column({
     type: DataType.INTEGER,
@@ -51,5 +39,6 @@ export class File extends Model {
     allowNull: false,
   })
   name!: string;
-  
 }
+
+export default File;

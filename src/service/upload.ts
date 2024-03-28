@@ -8,17 +8,7 @@ export const uploadProcess = async (lines: any) => {
     const frauds = []
 
 
-    const response = lines.forEach(async line => {
-        if (await !lessZero(line, errorsLine)) {
-
-        } else if (await !duplicated(line, duplicated) {
-            return 
-
-        } else if (await !fraud(line, fraud) {
-
-        }
-    });
-
+    const response: any= []
     return response;
 };
 

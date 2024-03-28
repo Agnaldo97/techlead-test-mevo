@@ -1,15 +1,9 @@
+import express from "express";
+// import qd from "../controller/upload";
 
-import { uploadFile } from '../controller/upload';
+export const router = express.Router();
 
-import express from 'express'
-
-const router = express.Router();
-
-const prefix = 'v1'
-
-router.post(`/${prefix}/upload`, uploadFile);
-router.post(`/check`, uploadFile);
-
-
-
-export default router;
+const base = "/mevo";
+router.get("/v1/check", (req, res) => {
+  res.status(200).end();
+});

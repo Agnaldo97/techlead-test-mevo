@@ -1,14 +1,15 @@
 import { Sequelize } from 'sequelize-typescript';
-
+import ENV from '../properties';
 const sequelize = new Sequelize({
-  database: 'Task',
-  host: 'localhost',
-  username: 'postgres',
-  password: 'pass',
-  dialect: 'mysql', // or 'mysql' for MySQL
-  //Specify the path to your models
-  // Add each model to the sequelize instance
+  database: ENV.DATABASE.MEVO.NAME,
+  host: ENV.DATABASE.MEVO.HOST,
+  username: ENV.DATABASE.MEVO.USERNAME,
+  password: ENV.DATABASE.MEVO.PASSWORD,
+  dialect: 'mysql',
   models: [__dirname + '/models'],
+  define: {
+    timestamps: false
+  }
 });
 
 export default sequelize;
