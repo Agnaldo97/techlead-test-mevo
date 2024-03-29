@@ -13,7 +13,7 @@ class UploadController {
 
       const response = await UploadService.uploadFile(req.file)
       
-      res.status(200).json("SUCESSO");
+      res.status(200).json(response);
     } catch (error: any) {
       res.status(500).json();
     }

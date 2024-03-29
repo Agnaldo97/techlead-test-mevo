@@ -18,7 +18,7 @@ CREATE TABLE `line` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `line` int(11) NOT NULL,
   `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
-  `reason` enum('VALOR_NEGATIVO','DUPICADO','') COLLATE utf8_bin DEFAULT NULL,
+  `reason` enum('VALOR_NEGATIVO','DUPLICADO','') COLLATE utf8_bin DEFAULT NULL,
   `status` enum('SUCESSO','ERRO') COLLATE utf8_bin DEFAULT NULL,
   `id_file` int(11) DEFAULT NULL,
   `from` varchar(100) COLLATE utf8_bin DEFAULT NULL,

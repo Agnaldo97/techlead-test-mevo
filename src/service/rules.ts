@@ -3,13 +3,16 @@ class RulesService {
     constructor() { }
 
     async lessZero(line: Line): Promise<Boolean> {
-        if (Number(line.amount) < 0)
+        if (Number(line?.amount) <= 0)
             return true
         return false
     }
 
     async duplicated(line: Line, processed: Line[]): Promise<Boolean> {
-        if (processed.includes(line))
+        const hasOjbect = processed.some(object => {
+            return JSON.stringify(object) === JSON.stringify(line);
+          });
+        if (hasOjbect)
             return true
         return false
     }

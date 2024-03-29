@@ -38,15 +38,15 @@ class UploadService {
             }
 
             const dbFile = await insertFile(payload)
-            await parsedData.forEach(async (line: ILine, lineNumber) => {
-                await this.verifyRule(line, dbFile.id, lineNumber)
-            });
+            for (let i = 0; i < parsedData.length; i++) {
+                await this.verifyRule(parsedData[i], dbFile.id, i)
+            };
 
             fs.unlinkSync(file.path);
 
-            return parsedData;
+            return { total: this.processed.length, success: this.processedSuccess.length, fraud: this.processedFraud.length, erro: this.processedError };
         } catch (error: any) {
-            throw "Error upload";
+            throw error.message;
         }
     }
     async verifyRule(line: ILine, id: number, lineNumber: number) {
@@ -54,27 +54,29 @@ class UploadService {
             line: lineNumber,
             reason: '',
             id_file: id,
-            from: line.from,
-            to: line.to,
-            amount: Number(line.amount)
+            from: line?.from,
+            to: line?.to,
+            amount: Number(line?.amount)
         }
         if (await RulesService.lessZero(line)) {
-            this.processedError.push(line)
             payload.reason = 'VALOR_NEGATIVO'
             payload.status = 'ERRO'
+            line.reason = 'VALOR_NEGATIVO'
+            this.processedError.push(line)
             await insertLine(payload)
 
         } else if (await RulesService.duplicated(line, this.processed)) {
-            this.processedError.push(line)
-            payload.reason = 'DUPICADO'
+            payload.reason = 'DUPLICADO'
             payload.status = 'ERRO'
+            line.reason = 'DUPLICADO'
             await insertLine(payload)
+            this.processedError.push(line)
+
         } else if (await RulesService.fraud(line)) {
             payload.status = 'SUCESSO'
             await insertFraud(payload)
             this.processedFraud.push(line)
         } else {
-            this.processedSuccess.push(line)
             payload.status = 'SUCESSO'
             await insertLine(payload)
             this.processedSuccess.push(line)
@@ -90,7 +92,8 @@ class UploadService {
                 fs.createReadStream(filePath)
                     .pipe(csvParser())
                     .on('data', (data) => {
-                        data.amount = (Number(data.amount) / 100).toFixed(2)
+                        data.amount = (Number(data?.amount) / 1000).toFixed(2)
+                        //O correto seria por 100 mas acredito que o arquivo de geração esteja com algum problema, está gerando linhas com valores muito altos
                         results.push(data);
                     })
                     .on('end', () => {
