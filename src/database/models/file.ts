@@ -18,27 +18,33 @@ class File extends Model {
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
-  quantity!: number;
+  total!: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  qtdSuccess!: number;
+  success!: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  qtdError!: number;
+  error!: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   name!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  status!: string;
 }
 
 export default File;

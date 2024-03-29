@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-
+import UploadService from '../service/upload'
 class UploadController {
 
   constructor() {
@@ -11,14 +11,10 @@ class UploadController {
         return res.status(400).send('No files were uploaded.');
       }
 
-      const filePath = req.file.path;
+      const response = await UploadService.uploadFile(req.file)
       
-
-
       res.status(200).json("SUCESSO");
     } catch (error: any) {
-
-
       res.status(500).json();
     }
   }
