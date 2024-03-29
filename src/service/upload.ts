@@ -1,44 +1,41 @@
+import csvParser from 'csv-parser';
+import fs from 'fs';
+class UploadService {
+    constructor() { }
 
+    async uploadFile(filePath: string): Promise<any> {
+        try {
 
-export const uploadProcess = async (lines: any) => {
+            const parsedData = await this.parseCSV(filePath);
 
-    const successLine = []
-    const errorsLine: any = []
-    const processed = []
-    const frauds = []
+            fs.unlinkSync(filePath);
 
-
-    const response: any= []
-    return response;
-};
-
-const lessZero = async (line: any, errorsLine: any) => {
-    if (line.amount < 0) {
-        return "NEGATIVO"
+            return parsedData;
+        } catch (error: any) {
+            throw "Error upload";
+        }
     }
-    //Incluir na base de processamento com status de negativo
+    async parseCSV(filePath: any) {
+        try {
+            const results: any = [];
 
-};
-
-const duplicated = async (line: any, processed: any, errorsLine: any) => {
-    if (processed.includes(line)) {
-        line.reason = "DUPLICADA"
-        return "DUPLICADO"
+            return new Promise((resolve, reject) => {
+                fs.createReadStream(filePath)
+                    .pipe(csvParser())
+                    .on('data', (data) => {
+                        results.push(data);
+                    })
+                    .on('end', () => {
+                        resolve(results);
+                    })
+                    .on('error', (error) => {
+                        reject(error);
+                    });
+            });
+        } catch (error) {
+            throw 'Error parse file';
+        }
     }
-    //Incluir na base de processamento com status de duplicado
+}
 
-};
-
-const fraud = async (line: any, frauds: any) => {
-    if (line.amount >= 50000)
-        return "SUSPEITO"
-    //Incluir na base de fraude
-};
-
-
-
-// {
-//     "from": 4713471018869,
-//     "to": 8470715754697,
-//     "amount": 131118230
-//   },
+export default new UploadService();

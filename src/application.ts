@@ -1,6 +1,7 @@
 import { Application } from "express";
 import express from "express";
 
+
 export class App {
   public app: Application;
 
@@ -19,6 +20,7 @@ export class App {
       this.app.use(m);
     });
   }
+
 
   public addMiddleWare(middleWare: any) {
     this.app.use(middleWare);
