@@ -1,5 +1,3 @@
--- mevo.process_file definition
-
 
 CREATE TABLE `file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

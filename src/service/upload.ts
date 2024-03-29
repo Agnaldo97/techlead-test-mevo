@@ -2,7 +2,7 @@ import csvParser from 'csv-parser';
 import fs from 'fs';
 import ILine from '../interface/iline'
 import IFile from '../interface/ifile'
-import { insertFile } from '../repository/upload';
+import { insertFile, updateFile } from '../repository/upload';
 import { insertLine } from '../repository/line';
 import { insertFraud } from '../repository/fraud';
 
@@ -37,14 +37,21 @@ class UploadService {
                 total: parsedData.length
             }
 
-            const dbFile = await insertFile(payload)
+            const dbFile: any = await insertFile(payload)
             for (let i = 0; i < parsedData.length; i++) {
                 await this.verifyRule(parsedData[i], dbFile.id, i)
             };
 
             fs.unlinkSync(file.path);
 
-            return { total: this.processed.length, success: this.processedSuccess.length, fraud: this.processedFraud.length, erro: this.processedError };
+            const success = this.processedSuccess.length
+            const fraud = this.processedFraud.length
+            const error = this.processedError.length
+
+            await updateFile(success, fraud, error, dbFile.id)
+
+
+            return { total: this.processed.length, success: success, fraud: fraud, error: this.processedError };
         } catch (error: any) {
             throw error.message;
         }

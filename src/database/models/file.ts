@@ -32,6 +32,12 @@ class File extends Model {
     type: DataType.INTEGER,
     allowNull: false,
   })
+  fraud!: number;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   error!: number;
 
   @Column({

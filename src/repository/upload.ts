@@ -13,3 +13,11 @@ export const insertFile = async (payload: IFile) => {
     }
     return await File.create({ ...data });
 };
+
+export const updateFile = async (success: number, fraud: number, error: number, id: number) => {
+    return await File.update({ success, fraud, error, status: "PROCESSADO" }, {
+        where: {
+            id
+        }
+    });
+};
